@@ -1,5 +1,6 @@
 package com.rodama.ecommerce.application.dto;
 
+import com.rodama.ecommerce.domain.model.Producto;
 import com.rodama.ecommerce.domain.model.enums.Categoria;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
@@ -34,4 +35,30 @@ public class ProductoDTO {
     @NotNull(message = "El stock es obligatorio")
     @Min(value = 0, message = "El stock no puede ser negativo")
     @Schema(description = "Cantidad disponible en inventario", example = "10")
-    private Integer stock;}
+    private Integer stock;
+
+    public Producto toEntity() {
+        Producto producto = new Producto();
+        producto.setId(this.id);
+        producto.setNombre(this.nombre);
+        producto.setPrecio(this.precio);
+        producto.setCategoria(this.categoria);
+        producto.setDescripcion(this.descripcion);
+        producto.setStock(this.stock);
+        return producto;
+    }
+
+    public static ProductoDTO fromEntity(Producto producto) {
+        ProductoDTO dto = new ProductoDTO();
+        dto.setId(producto.getId());
+        dto.setNombre(producto.getNombre());
+        dto.setPrecio(producto.getPrecio());
+        dto.setCategoria(producto.getCategoria());
+        dto.setDescripcion(producto.getDescripcion());
+        dto.setStock(producto.getStock());
+        return dto;
+    }
+
+}
+
+

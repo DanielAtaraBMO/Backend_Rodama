@@ -65,4 +65,6 @@ public class UsuarioDTO {
         usuario.setRol(this.rol);
         return usuario;
     }
+
+
 }

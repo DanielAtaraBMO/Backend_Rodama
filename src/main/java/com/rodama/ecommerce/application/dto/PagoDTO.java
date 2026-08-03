@@ -1,5 +1,7 @@
 package com.rodama.ecommerce.application.dto;
 
+import com.rodama.ecommerce.domain.model.Pago;
+import com.rodama.ecommerce.domain.model.Pedido;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -33,4 +35,24 @@ public class PagoDTO {
     @NotNull(message = "La fecha es obligatoria")
     @Schema(description = "Fecha del pago", example = "2026-08-02T21:30:00")
     private LocalDateTime fecha;
+
+    public Pago toEntity() {
+        Pago pago = new Pago();
+        pago.setId(this.id);
+        pago.setPedidoId(this.pedidoId);
+        pago.setMetodo(this.metodo);
+        pago.setMonto(this.monto);
+        pago.setFecha(this.fecha);
+        return pago;
+    }
+
+    public static PagoDTO fromEntity(Pago pago) {
+        PagoDTO dto = new PagoDTO();
+        dto.setId(pago.getId());
+        dto.setPedidoId(pago.getPedidoId());
+        dto.setMetodo(pago.getMetodo());
+        dto.setMonto(pago.getMonto());
+        dto.setFecha(pago.getFecha());
+        return dto;
+    }
 }

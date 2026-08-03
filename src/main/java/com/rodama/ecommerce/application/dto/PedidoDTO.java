@@ -1,5 +1,6 @@
 package com.rodama.ecommerce.application.dto;
 
+import com.rodama.ecommerce.domain.model.Pedido;
 import com.rodama.ecommerce.domain.model.Usuario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -34,4 +35,24 @@ public class PedidoDTO {
     @Positive(message = "El precio debe ser mayor a 0")
     @Schema(description = "Precio total del pedido", example = "150000")
     private Double precio;
+
+    public Pedido toEntity() {
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(this.id);
+        pedido.setUsuario(this.usuario);
+        pedido.setDireccion(this.direccion);
+        pedido.setFecha(this.fecha);
+        pedido.setPrecio(this.precio);
+        return pedido;
+    }
+
+    public static PedidoDTO fromEntity(Pedido pedido) {
+        PedidoDTO dto = new PedidoDTO();
+        dto.setId(pedido.getIdPedido());
+        dto.setUsuario(pedido.getUsuario());
+        dto.setDireccion(pedido.getDireccion());
+        dto.setFecha(pedido.getFecha());
+        dto.setPrecio(pedido.getPrecio());
+        return dto;
+    }
 }
