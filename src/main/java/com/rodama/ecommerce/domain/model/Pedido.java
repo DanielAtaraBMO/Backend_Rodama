@@ -1,38 +1,38 @@
-package com.rodama.ecommerce.model;
+package com.rodama.ecommerce.domain.model;
 
 import java.time.LocalDateTime;
 
 public class Pedido {
     private Long id_pedido;
-    private Long id_usuario;
+    private Usuario usuario;
     private String direccion;
     private LocalDateTime fecha;
     private Double precio;
 
     public Pedido(){}
 
-    public Pedido(Long id_pedido,Long id_usuario,String direccion,LocalDateTime fecha,Double precio){
+    public Pedido(Long id_pedido,Usuario usuario,String direccion,LocalDateTime fecha,Double precio){
         this.id_pedido = id_pedido;
-        this.id_usuario = id_usuario;
+        this.usuario = usuario;
         this.direccion = direccion;
         this.fecha = fecha;
         this.precio = precio;
     }
 
-    public Long getId_pedido() {
+    public Long getIdPedido() {
         return id_pedido;
     }
 
-    public void setId_pedido(Long id_pedido) {
+    public void setIdPedido(Long id_pedido) {
         this.id_pedido = id_pedido;
     }
 
-    public Long getId_usuario() {
-        return id_usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setId_usuario(Long id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getDireccion() {

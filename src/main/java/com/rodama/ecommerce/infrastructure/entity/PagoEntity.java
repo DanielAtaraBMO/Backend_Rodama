@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "Pedido")
+@Table(name = "Pago")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,9 +17,15 @@ import lombok.Setter;
 public class PagoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_pago;
-    private Long id_usuario;
-    private String metodoDePago;
-    private Double total;
-    //Aqui va producto
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idPedido", nullable = false)
+    private PedidoEntity pedido;
+
+    private String metodo;
+
+    private Double monto;
+
+    private LocalDateTime fecha;
 }

@@ -1,5 +1,6 @@
 package com.rodama.ecommerce.infrastructure.entity;
 
+import com.rodama.ecommerce.domain.model.enums.Categoria;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,8 @@ public class ProductoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
     private String nombre;
-    private String precio;
-    private String categoria;
+    private Double precio;
+    private Categoria categoria;
+    private String descripcion;
+    private Integer stock;
 }

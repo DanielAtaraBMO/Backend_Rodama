@@ -1,6 +1,6 @@
 package com.rodama.ecommerce.infrastructure.entity;
 
-import com.rodama.ecommerce.model.enums.Rol;
+import com.rodama.ecommerce.domain.model.enums.Rol;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
