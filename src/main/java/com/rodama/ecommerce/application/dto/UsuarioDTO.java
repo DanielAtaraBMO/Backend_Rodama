@@ -36,7 +36,7 @@ public class UsuarioDTO {
     @NotBlank(message = "La contraseña no puede estar vacía")
     @Size(min = 6, max = 100, message = "La contraseña debe tener mínimo 6 caracteres")
     @Schema(description = "Contraseña del usuario", example = "password123")
-    private String contraseña;
+    private String password;
 
     @NotNull(message = "El rol es obligatorio")
     @Schema(description = "Rol del usuario", example = "ADMIN")
@@ -47,9 +47,9 @@ public class UsuarioDTO {
         dto.setId(usuario.getId());
         dto.setNombre(usuario.getNombre());
         dto.setApellido(usuario.getApellido());
-        dto.setCorreo(usuario.getCorreo());
+        dto.setCorreo(usuario.getEmail());
         dto.setTelefono(usuario.getTelefono());
-        dto.setContraseña(usuario.getContraseña());
+        dto.setPassword(usuario.getPassword());
         dto.setRol(usuario.getRol());
         return dto;
     }
@@ -59,9 +59,9 @@ public class UsuarioDTO {
         usuario.setId(this.id);
         usuario.setNombre(this.nombre);
         usuario.setApellido(this.apellido);
-        usuario.setCorreo(this.correo);
+        usuario.setEmail(this.correo);
         usuario.setTelefono(this.telefono);
-        usuario.setContraseña(this.contraseña);
+        usuario.setPassword(this.password);
         usuario.setRol(this.rol);
         return usuario;
     }

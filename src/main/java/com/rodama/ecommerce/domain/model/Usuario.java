@@ -6,9 +6,9 @@ public class Usuario {
     private Long id;
     private String nombre;
     private String apellido;
-    private String correo;
+    private String email;
     private String telefono;
-    private String contraseña;
+    private String password;
     private Rol rol;
 
     public Usuario(){
@@ -17,9 +17,9 @@ public class Usuario {
     public Usuario(Long id,String nombre,String apellido,String correo,String telefono,String contraseña,Rol rol){
         this.id = id;
         this.nombre = nombre;
-        this.correo = correo;
+        this.email = correo;
         this.telefono = telefono;
-        this.contraseña = contraseña;
+        this.password = contraseña;
         this.rol = rol;
     }
 
@@ -47,12 +47,12 @@ public class Usuario {
         this.apellido = apellido;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getTelefono() {
@@ -63,12 +63,12 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Rol getRol() {

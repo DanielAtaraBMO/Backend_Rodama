@@ -1,6 +1,6 @@
 package com.rodama.ecommerce.domain.model.enums;
 
 public enum Rol {
-    ADMIN,
-    USER
+    ROLE_ADMIN,
+    ROLE_USER
 }

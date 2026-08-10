@@ -19,8 +19,8 @@ public class UsuarioEntity {
     private Long id;
     private String nombre;
     private String apellido;
-    private String correo;
+    private String email;
     private String telefono;
-    private String contraseña;
+    private String password;
     private Rol rol;
 }

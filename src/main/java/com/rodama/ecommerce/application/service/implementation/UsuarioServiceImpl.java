@@ -21,11 +21,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario crearUsuario(Usuario usuario) {
 
-        if (usuario.getCorreo() == null || usuario.getCorreo().isEmpty()) {
+        if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
             throw new RuntimeException("El correo no puede estar vacío");
         }
 
-        if (repository.existsByCorreo(usuario.getCorreo())) {
+        if (repository.existsByEmail(usuario.getEmail())) {
             throw new RuntimeException("El correo ya existe");
         }
 
@@ -50,7 +50,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Optional<Usuario> encontrarPorCorreo(String correo) {
-        return repository.findByCorreo(correo)
+        return repository.findByEmail(correo)
                 .map(this::toModel);
     }
 
@@ -59,20 +59,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return repository.findById(id).map(entity -> {
 
-            if (usuario.getCorreo() == null || usuario.getCorreo().isEmpty()) {
+            if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
                 throw new RuntimeException("El correo no puede estar vacío");
             }
 
-            if (repository.existsByCorreo(usuario.getCorreo())
-                    && !entity.getCorreo().equals(usuario.getCorreo())) {
+            if (repository.existsByEmail(usuario.getEmail())
+                    && !entity.getEmail().equals(usuario.getEmail())) {
                 throw new RuntimeException("El correo ya está en uso");
             }
 
             entity.setNombre(usuario.getNombre());
             entity.setApellido(usuario.getApellido());
-            entity.setCorreo(usuario.getCorreo());
+            entity.setEmail(usuario.getEmail());
             entity.setTelefono(usuario.getTelefono());
-            entity.setContraseña(usuario.getContraseña());
+            entity.setPassword(usuario.getPassword());
             entity.setRol(usuario.getRol());
 
             UsuarioEntity actualizado = repository.save(entity);
@@ -99,9 +99,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         entity.setId(usuario.getId());
         entity.setNombre(usuario.getNombre());
         entity.setApellido(usuario.getApellido());
-        entity.setCorreo(usuario.getCorreo());
+        entity.setEmail(usuario.getEmail());
         entity.setTelefono(usuario.getTelefono());
-        entity.setContraseña(usuario.getContraseña());
+        entity.setPassword(usuario.getPassword());
         entity.setRol(usuario.getRol());
         return entity;
     }
@@ -111,9 +111,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setId(entity.getId());
         usuario.setNombre(entity.getNombre());
         usuario.setApellido(entity.getApellido());
-        usuario.setCorreo(entity.getCorreo());
+        usuario.setEmail(entity.getEmail());
         usuario.setTelefono(entity.getTelefono());
-        usuario.setContraseña(entity.getContraseña());
+        usuario.setPassword(entity.getPassword());
         usuario.setRol(entity.getRol());
         return usuario;
     }
