@@ -16,24 +16,22 @@ public class DataInitializer implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void run(String... args) throws Exception {
-        String correoAdmin = "admin@rodama.com";
+    public void run(String... args) {
+        try {
+            String correoAdmin = "admin@rodama.com";
 
-        boolean existe = usuarioRepository.findByEmail(correoAdmin).isPresent();
-
-        if (!existe) {
-            UsuarioEntity admin = new UsuarioEntity();
-
-            admin.setNombre("Administrador");
-            admin.setEmail(correoAdmin);
-            admin.setPassword(passwordEncoder.encode("Admin123"));
-            admin.setRol(Rol.ROLE_ADMIN);; // IMPORTANTE
-
-            usuarioRepository.save(admin);
-
-            System.out.println("Admin creado correctamente");
-        } else {
-            System.out.println("Admin ya existe");
+            if (usuarioRepository.findByEmail(correoAdmin).isEmpty()) {
+                UsuarioEntity admin = new UsuarioEntity();
+                admin.setNombre("Administrador");
+                admin.setApellido("Rodama");
+                admin.setEmail(correoAdmin);
+                admin.setTelefono("3001234567");
+                admin.setPassword(passwordEncoder.encode("Admin123"));
+                admin.setRol(Rol.ROLE_ADMIN);
+                usuarioRepository.save(admin);
+            }
+        } catch (Exception e) {
+            System.out.println("DataInitializer: " + e.getMessage());
         }
     }
 }

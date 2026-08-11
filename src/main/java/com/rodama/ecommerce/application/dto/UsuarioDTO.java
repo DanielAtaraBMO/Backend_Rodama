@@ -14,12 +14,12 @@ public class UsuarioDTO {
     private Long id;
 
     @NotBlank(message = "El nombre no puede estar vacío")
-    @Size(min = 3, max = 20, message = "El nombre debe contener mínimo 3 a 20 caracteres")
+    @Size(min = 3, max = 50, message = "El nombre debe contener mínimo 3 a 50 caracteres")
     @Schema(description = "Nombre del usuario", example = "Juan")
     private String nombre;
 
     @NotBlank(message = "El apellido no puede estar vacío")
-    @Size(min = 3, max = 20, message = "El apellido debe contener mínimo 3 a 20 caracteres")
+    @Size(min = 3, max = 50, message = "El apellido debe contener mínimo 3 a 50 caracteres")
     @Schema(description = "Apellido del usuario", example = "Pérez")
     private String apellido;
 
@@ -38,8 +38,7 @@ public class UsuarioDTO {
     @Schema(description = "Contraseña del usuario", example = "password123")
     private String password;
 
-    @NotNull(message = "El rol es obligatorio")
-    @Schema(description = "Rol del usuario", example = "ADMIN")
+    @Schema(description = "Rol del usuario (por defecto ROLE_USER)", example = "ROLE_USER")
     private Rol rol;
 
     public static UsuarioDTO fromEntity(Usuario usuario) {
@@ -62,9 +61,7 @@ public class UsuarioDTO {
         usuario.setEmail(this.correo);
         usuario.setTelefono(this.telefono);
         usuario.setPassword(this.password);
-        usuario.setRol(this.rol);
+        usuario.setRol(this.rol != null ? this.rol : Rol.ROLE_USER);
         return usuario;
     }
-
-
 }

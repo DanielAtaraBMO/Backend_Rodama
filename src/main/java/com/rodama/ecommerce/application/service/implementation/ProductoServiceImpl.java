@@ -21,14 +21,17 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public Producto crearProducto(Producto producto) {
-        if (producto.getNombre() == null || producto.getNombre().isEmpty()) {
-            throw new RuntimeException("El nombre es obligatorio");
+        if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
+            producto.setNombre("Producto Nuevo");
         }
         if (producto.getPrecio() == null || producto.getPrecio() <= 0) {
-            throw new RuntimeException("El precio debe ser mayor a 0");
+            producto.setPrecio(1000.0);
         }
         if (producto.getCategoria() == null) {
-            throw new RuntimeException("La categoria es obligatoria");
+            producto.setCategoria(Categoria.ACCESORIOS);
+        }
+        if (producto.getStock() == null) {
+            producto.setStock(1);
         }
 
         ProductoEntity saved = repository.save(toEntity(producto));
@@ -51,7 +54,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public List<Producto> encontrarPorCategoria(Categoria categoria) {
-        return repository.findByCategoria(categoria)
+        return repository.findByCategoriaIgnoreCase(categoria.name())
                 .stream()
                 .map(this::toModel)
                 .toList();
@@ -60,22 +63,27 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public Optional<Producto> actualizarProducto(Long id, Producto producto) {
         return repository.findById(id).map(entity -> {
-
-            if (producto.getNombre() == null || producto.getNombre().isEmpty()) {
-                throw new RuntimeException("El nombre es obligatorio");
+            if (producto.getNombre() != null && !producto.getNombre().trim().isEmpty()) {
+                entity.setNombre(producto.getNombre());
             }
-            if (producto.getPrecio() == null || producto.getPrecio() <= 0) {
-                throw new RuntimeException("El precio debe ser mayor a 0");
+            if (producto.getPrecio() != null && producto.getPrecio() > 0) {
+                entity.setPrecio(producto.getPrecio());
             }
-            if (producto.getCategoria() == null) {
-                throw new RuntimeException("La categoria es obligatoria");
+            if (producto.getCategoria() != null) {
+                entity.setCategoria(producto.getCategoria());
             }
-
-            entity.setNombre(producto.getNombre());
-            entity.setPrecio(producto.getPrecio());
-            entity.setCategoria(producto.getCategoria());
-            entity.setDescripcion(producto.getDescripcion());
-            entity.setStock(producto.getStock());
+            if (producto.getDescripcion() != null) {
+                entity.setDescripcion(producto.getDescripcion());
+            }
+            if (producto.getStock() != null) {
+                entity.setStock(producto.getStock());
+            }
+            if (producto.getTalla() != null) {
+                entity.setTalla(producto.getTalla());
+            }
+            if (producto.getImageUrl() != null) {
+                entity.setImageUrl(producto.getImageUrl());
+            }
 
             ProductoEntity actualizado = repository.save(entity);
             return toModel(actualizado);
@@ -85,13 +93,13 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public boolean eliminarPorId(Long id) {
         if (!repository.existsById(id)) {
-            throw new RuntimeException("Producto no encontrado");
+            return false;
         }
         repository.deleteById(id);
         return true;
     }
 
-    private ProductoEntity toEntity(Producto producto){
+    private ProductoEntity toEntity(Producto producto) {
         ProductoEntity entity = new ProductoEntity();
         entity.setId(producto.getId());
         entity.setNombre(producto.getNombre());
@@ -99,10 +107,12 @@ public class ProductoServiceImpl implements ProductoService {
         entity.setCategoria(producto.getCategoria());
         entity.setDescripcion(producto.getDescripcion());
         entity.setStock(producto.getStock());
+        entity.setTalla(producto.getTalla());
+        entity.setImageUrl(producto.getImageUrl());
         return entity;
     }
 
-    private Producto toModel(ProductoEntity entity){
+    private Producto toModel(ProductoEntity entity) {
         Producto producto = new Producto();
         producto.setId(entity.getId());
         producto.setNombre(entity.getNombre());
@@ -110,6 +120,8 @@ public class ProductoServiceImpl implements ProductoService {
         producto.setCategoria(entity.getCategoria());
         producto.setDescripcion(entity.getDescripcion());
         producto.setStock(entity.getStock());
+        producto.setTalla(entity.getTalla());
+        producto.setImageUrl(entity.getImageUrl());
         return producto;
     }
 }

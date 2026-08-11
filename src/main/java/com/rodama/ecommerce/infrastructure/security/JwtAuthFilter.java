@@ -25,8 +25,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
         String path = request.getRequestURI();
-        return path.startsWith("/auth/");
+        return path.startsWith("/api/auth/") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui");
     }
 
     @Override
@@ -37,7 +40,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        // ✅ SI NO HAY TOKEN → DEJA PASAR
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -50,21 +52,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 String username = jwtUtil.extractUsername(token);
                 String role = jwtUtil.extractRole(token);
 
-                List<SimpleGrantedAuthority> authorities = List.of(
-                        new SimpleGrantedAuthority(role) // 👈 SIN "ROLE_"
-                );
+                if (role != null) {
+                    List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(username, null, authorities);
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(username, null, authorities);
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
 
         } catch (Exception e) {
-            System.out.println("Error en JWT: " + e.getMessage());
+            System.out.println("Error en JWT Filter: " + e.getMessage());
         }
 
-        // ✅ SIEMPRE CONTINÚA
         filterChain.doFilter(request, response);
     }
 }

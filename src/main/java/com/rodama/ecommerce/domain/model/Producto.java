@@ -9,16 +9,20 @@ public class Producto {
     private Categoria categoria;
     private String descripcion;
     private Integer stock;
+    private String talla;
+    private String imageUrl;
 
-    public Producto(){}
+    public Producto() {}
 
-    public Producto(Long id, String nombre, Double precio, Categoria categoria, String descripcion, Integer stock) {
+    public Producto(Long id, String nombre, Double precio, Categoria categoria, String descripcion, Integer stock, String talla, String imageUrl) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.categoria = categoria;
         this.descripcion = descripcion;
         this.stock = stock;
+        this.talla = talla;
+        this.imageUrl = imageUrl;
     }
 
     public Long getId() {
@@ -67,5 +71,21 @@ public class Producto {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public String getTalla() {
+        return talla;
+    }
+
+    public void setTalla(String talla) {
+        this.talla = talla;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
